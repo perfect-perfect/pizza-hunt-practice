@@ -4,7 +4,11 @@
 // express sets up the server tath allows use to ake requests and send responses from our database.
 const express = require('express');
 
+// mongoose is an ODM (Object Document Mapping)
+// Schema based solution to model your application data.
+//  
 const mongoose = require('mongoose');
+
 
 // initiates, creates, the server
 const app = express();
