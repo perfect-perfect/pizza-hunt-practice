@@ -30,6 +30,7 @@ const PizzaSchema = new Schema(
         },
         // we could also specify array  as the data type instead of brackets
         toppings: [],
+        // this associates the comments with posts
         comments: [
             {
                 // tell mongoose to expect an ObjectId
@@ -61,7 +62,14 @@ const PizzaSchema = new Schema(
 // get total count of comments and replies on retrieval
 // - you'll be able to access this with 'pizza.commentCount'
 PizzaSchema.virtual('commentCount').get(function() {
-    return this.comments.length;
+    // here we're using the '.reduce()' method  to tally up the total of every comment with its replies
+    //  - reduce() takes two parameters
+    //      - 'accumulator'
+    //          - here it is 'total'
+    //      - 'currentValue'
+    //          - here it is 'comment'
+    //  - as .reduce() walks through the array, it passes the accumulating total and the current value of comment into the function, with the return of the function revising the total for the iteratin throguh the array.
+    return this.comments.reduce((total, comment) => total + comment.replies.length + 1, 0);
 });
 
 
