@@ -37,7 +37,7 @@ const commentController = {
             //      - the replies subdocument will come from the req.body, whcih we destructured
             { $push: { replies: body }},
             // when the docuement is updated mongoose will return the updated document
-            { new: true }
+            { new: true, runValidators: true }
         )
             // 
             .then(dbPizzaData => {

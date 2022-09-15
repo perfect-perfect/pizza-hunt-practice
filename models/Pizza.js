@@ -10,10 +10,18 @@ const PizzaSchema = new Schema(
     {
 
         pizzaName: {
-            type: String
+            type: String,
+            // when required is set to true, it will require data to exist for that field 
+            //  - with required you can actually provide a custom error message
+            //      - required: 'You need to provide a pizza name!'
+            required: true,
+            // removes whitespace before and after the input string
+            trim: true
         },
         createdBy: {
-            type: String
+            type: String,
+            required: true,
+            trim: true
         },
         createdAt: {
             type: Date,
@@ -26,9 +34,19 @@ const PizzaSchema = new Schema(
         },
         size: {
             type: String,
+            required: true,
+            // 'enum' stands for 'enumerable'
+            //  - a popular term in web development that refers to a set of data that can be iterated over (much like the 'for...in' loop to iterate through an object) ??? no idea what a 'for...in' loop is
+            //  - it is validation
+            //  - with this validation in place, we provide an array of options that this size field will accept
+            //      - if a user attempts to enter pizza not listed - the validation will not allow it
+            // if you want to provide a custome error message for the 'required' option here, you wouldn't recieve it. 
+            //  - if you want custom message for enumerable values you need to look into implementing the 'validate' option mongoose lets you use, where you can create a custo function to test the values.
+            enum: ['Personal', 'Small', 'Medium', 'Large', 'Extra Large'],
             default: "Large"
         },
         // we could also specify array  as the data type instead of brackets
+        // the toppings field can have any number of custom toppings which may be hard to regulate, so we'll keep it as is
         toppings: [],
         // this associates the comments with posts
         comments: [
